@@ -9,9 +9,7 @@ from io import StringIO
 def download_file(url):
     """Downloads a file from the given URL and returns its content as a string."""
     response = requests.get(url)
-    response.raise_for_status()
     return response.text
-
 
 def process_log_file(log_content):
     """Processes the log file and extracts relevant data."""
@@ -26,7 +24,7 @@ def process_log_file(log_content):
 
     for row in csv_reader:
         if len(row) < 5:
-            continue  # Skip invalid rows
+            continue  # Skip rows that do not have 5 columns
 
         path, _, user_agent, _, _ = row
         total_requests += 1
@@ -41,11 +39,15 @@ def process_log_file(log_content):
             browser_counts[match.group(1)] += 1
 
     # Calculate image request percentage
-    image_percentage = (image_requests / total_requests) * 100 if total_requests else 0
+    image_percentage = (image_requests / total_requests) * 100 \
+        if total_requests \
+        else 0
 
     # Find the most popular browser
     most_popular_browser = browser_counts.most_common(1)
-    popular_browser = most_popular_browser[0][0] if most_popular_browser else "Unknown"
+    popular_browser = most_popular_browser[0][0] \
+        if most_popular_browser \
+        else "Unknown"
 
     return image_requests, image_percentage, popular_browser
 
