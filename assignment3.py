@@ -7,12 +7,10 @@ from io import StringIO
 
 
 def download_file(url):
-    """Downloads a file from the given URL and returns its content as a string."""
     response = requests.get(url)
     return response.text
 
 def process_log_file(log_content):
-    """Processes the log file and extracts relevant data."""
     image_pattern = re.compile(r'.*\.(jpg|gif|png)$', re.IGNORECASE)
     browser_pattern = re.compile(r'(Firefox|Chrome|Safari|MSIE)', re.IGNORECASE)
 
@@ -43,7 +41,7 @@ def process_log_file(log_content):
         if total_requests \
         else 0
 
-    # Find the most popular browser
+    # Most popular browser
     most_popular_browser = browser_counts.most_common(1)
     popular_browser = most_popular_browser[0][0] \
         if most_popular_browser \
@@ -53,7 +51,6 @@ def process_log_file(log_content):
 
 
 def main(url="http://s3.amazonaws.com/cuny-is211-spring2015/weblog.csv"):
-    """Main function to download, process, and analyze the web log file."""
     print(f"Running main with URL = {url}...")
 
     # Download and process the log file
@@ -66,7 +63,6 @@ def main(url="http://s3.amazonaws.com/cuny-is211-spring2015/weblog.csv"):
 
 
 if __name__ == "__main__":
-    """Main entry point"""
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--url",
